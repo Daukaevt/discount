@@ -13,7 +13,7 @@
         android:layout_height="wrap_content"
         android:layout_marginTop="16dp"
         android:background="@color/lightYellow"
-        android:hint="Пустой массив"
+        android:hint="@string/emptyarray"
         android:textSize="24sp"
         android:visibility="invisible"
         app:layout_constraintEnd_toEndOf="@+id/edPrice"
@@ -30,20 +30,21 @@
         android:background="@color/lightYellow"
         android:backgroundTint="#FFFDEB"
         android:ems="10"
-        android:hint="Введите цену"
+        android:hint="@string/price"
         android:inputType="number"
         android:minHeight="48dp"
         android:visibility="invisible"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintTop_toTopOf="parent"
+        android:autofillHints="" />
 
     <Button
         android:id="@+id/btEnter"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginTop="16dp"
-        android:text="Добавить в массив данных"
+        android:text="@string/enter"
         android:visibility="invisible"
         app:layout_constraintEnd_toEndOf="@+id/edPrice"
         app:layout_constraintStart_toStartOf="@+id/edPrice"
@@ -55,7 +56,7 @@
         android:layout_height="wrap_content"
         android:layout_marginTop="16dp"
         android:background="#DCFFDE"
-        android:hint="Скидки"
+        android:hint="@string/discountPrice"
         android:textSize="24sp"
         android:visibility="invisible"
         app:layout_constraintEnd_toEndOf="@+id/edPrice"
@@ -63,18 +64,37 @@
         app:layout_constraintTop_toBottomOf="@+id/tvArray" />
 
     <EditText
+        android:id="@+id/edDiscount"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="16dp"
+        android:ems="10"
+        android:hint="@string/discount"
+        android:inputType="number"
+        android:minHeight="48dp"
+        android:textColorHint="#546E7A"
+        android:textSize="14sp"
+        app:layout_constraintEnd_toEndOf="@+id/edPrice"
+        app:layout_constraintStart_toStartOf="@+id/edPrice"
+        app:layout_constraintTop_toBottomOf="@+id/tvResult"
+        android:autofillHints="" />
+
+    <EditText
         android:id="@+id/edOffset"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:layout_marginTop="32dp"
+        android:layout_marginTop="16dp"
         android:ems="10"
         android:hint="@string/offset"
         android:inputType="number"
         android:minHeight="48dp"
+        android:textColorHint="#546E7A"
         android:textSize="14sp"
         app:layout_constraintEnd_toEndOf="@+id/edPrice"
+        app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="@+id/edPrice"
-        app:layout_constraintTop_toBottomOf="@+id/tvResult" />
+        app:layout_constraintTop_toBottomOf="@+id/edDiscount"
+        android:autofillHints="" />
 
     <EditText
         android:id="@+id/edReadLength"
@@ -85,15 +105,18 @@
         android:hint="@string/readLength"
         android:inputType="number"
         android:minHeight="48dp"
+        android:textColorHint="#546E7A"
         android:textSize="14sp"
         app:layout_constraintEnd_toEndOf="@+id/edPrice"
         app:layout_constraintStart_toStartOf="@+id/edPrice"
-        app:layout_constraintTop_toBottomOf="@+id/edOffset" />
+        app:layout_constraintTop_toBottomOf="@+id/edOffset"
+        android:autofillHints="" />
 
     <Button
         android:id="@+id/btRun"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
+        android:layout_marginTop="16dp"
         android:text="@string/run"
         app:layout_constraintEnd_toEndOf="@+id/edPrice"
         app:layout_constraintStart_toStartOf="@+id/edPrice"

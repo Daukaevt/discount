@@ -3,4 +3,9 @@
     <string name="offset">номер позиции, с которой нужно применить скидку</string>
     <string name="readLength">количество позиций, к которым нужно применить скидку</string>
     <string name="run">Применить</string>
+    <string name="discount">размер скидки, в %</string>
+    <string name="emptyarray">Пустой массив</string>
+    <string name="price">Введите цену</string>
+    <string name="enter">Добавить в массив данных</string>
+    <string name="discountPrice">Скидки</string>
 </resources>

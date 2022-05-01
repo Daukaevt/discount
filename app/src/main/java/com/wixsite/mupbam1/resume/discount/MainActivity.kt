@@ -12,7 +12,6 @@ import java.io.*
 val fileName= "CountFile"
 val priceData= mutableListOf<Int>()
 val resultData= mutableListOf<Int>()
-val discount=50
 var offset=0
 var readLength=0
 var countNotFound=""
@@ -49,6 +48,7 @@ class MainActivity : AppCompatActivity() {
                     tvResult.visibility = View.VISIBLE
                     btEnter.visibility = View.VISIBLE
                     btRun.visibility=View.GONE
+                    edDiscount.visibility=View.GONE
                     edOffset.visibility=View.GONE
                     edReadLength.visibility=View.GONE
 
@@ -107,8 +107,10 @@ class MainActivity : AppCompatActivity() {
                     when (priceData.size)
                     {   in 0..offset-> Log.d("MyLog","more")
                         in offset+1..position+1-> {
+                            val discount=edDiscount.text.toString().toInt()
+                            Log.d("MyLog","discount $discount")
 
-                            val discountPrice = priceData[priceData.size-1] * discount / 100
+                            val discountPrice = priceData[priceData.size-1] *(100 -discount) / 100
                             resultData.add(discountPrice)
 
                         }
