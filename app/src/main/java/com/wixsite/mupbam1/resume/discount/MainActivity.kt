@@ -31,14 +31,14 @@ class MainActivity : AppCompatActivity() {
         count=countValue.toString()
         if (countValue==3) {
             Toast.makeText(this, "Toast с произвольным текстом.", Toast.LENGTH_LONG).show()
-            Log.d("MyLog","c   $countValue")
-        }
+            }
 
         saveData(fileName, count)
-
-
         binding.launch.text=count
-        Log.d("MyLog","readData(fileName)-${readData(fileName)}")
+        init()
+    }
+
+    fun init(){
         binding.apply {
             btRun.setOnClickListener {
                 if (edOffset.text.isNotEmpty()&&edReadLength.text.isNotEmpty()) {
@@ -57,18 +57,16 @@ class MainActivity : AppCompatActivity() {
                 }
             }
         }
-
     }
 
-    public fun readData(fileName: String): String {
+    private fun readData(fileName: String): String {
         try {
-            val reader:BufferedReader= BufferedReader(InputStreamReader(openFileInput(fileName)))
-            var line=""
+            val reader = BufferedReader(InputStreamReader(openFileInput(fileName)))
+            var line: String
             while ((reader.readLine().also { line = it })!=null) return line
-            Log.d("MyLog","")
+
         }catch (e: FileNotFoundException){
             e.printStackTrace()
-            Log.d("MyLog","File111NotFoundException")
             countNotFound="0"
         }catch (e: IOException){
             e.printStackTrace()
@@ -80,7 +78,7 @@ class MainActivity : AppCompatActivity() {
 
     private fun saveData(fileName:String, count:String) {
         try {
-            val writer: BufferedWriter= BufferedWriter(
+            val writer= BufferedWriter(
                 OutputStreamWriter(openFileOutput(
                     fileName,
                     MODE_PRIVATE))
@@ -94,9 +92,6 @@ class MainActivity : AppCompatActivity() {
         catch (e: IOException){
             Log.d("MyLog","$e")
         }
-
-
-
     }
 
     private fun discountPriceData() {
@@ -113,7 +108,7 @@ class MainActivity : AppCompatActivity() {
                     {   in 0..offset-> Log.d("MyLog","more")
                         in offset+1..position+1-> {
 
-                            var discountPrice = priceData[priceData.size-1] * discount / 100
+                            val discountPrice = priceData[priceData.size-1] * discount / 100
                             resultData.add(discountPrice)
 
                         }
@@ -126,6 +121,5 @@ class MainActivity : AppCompatActivity() {
             }
         }
     }
-
 
 }
