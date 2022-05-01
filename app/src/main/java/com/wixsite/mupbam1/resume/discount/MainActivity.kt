@@ -1,4 +1,5 @@
 package com.wixsite.mupbam1.resume.discount
+// https://www.youtube.com/watch?v=DvJDnw3HECg
 
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
@@ -6,13 +7,15 @@ import android.util.Log
 import android.view.View
 import android.widget.Toast
 import com.wixsite.mupbam1.resume.discount.databinding.ActivityMainBinding
+import java.io.*
 
-//val priceData= listOf<Int>(5,100,20,66,16)
+val fileName= "CountFile"
 val priceData= mutableListOf<Int>()
 val resultData= mutableListOf<Int>()
 val discount=50
 var offset=0
 var readLength=0
+var countNotFound=""
 
 class MainActivity : AppCompatActivity() {
     lateinit var binding: ActivityMainBinding
@@ -20,6 +23,22 @@ class MainActivity : AppCompatActivity() {
         binding= ActivityMainBinding.inflate(layoutInflater)
         super.onCreate(savedInstanceState)
         setContentView(binding.root)
+
+        var count=readData(fileName)
+        if (countNotFound=="0") count="0"
+        var countValue= count.toInt()
+        countValue++
+        count=countValue.toString()
+        if (countValue==3) {
+            Toast.makeText(this, "Toast с произвольным текстом.", Toast.LENGTH_LONG).show()
+            Log.d("MyLog","c   $countValue")
+        }
+
+        saveData(fileName, count)
+
+
+        binding.launch.text=count
+        Log.d("MyLog","readData(fileName)-${readData(fileName)}")
         binding.apply {
             btRun.setOnClickListener {
                 if (edOffset.text.isNotEmpty()&&edReadLength.text.isNotEmpty()) {
@@ -38,6 +57,46 @@ class MainActivity : AppCompatActivity() {
                 }
             }
         }
+
+    }
+
+    public fun readData(fileName: String): String {
+        try {
+            val reader:BufferedReader= BufferedReader(InputStreamReader(openFileInput(fileName)))
+            var line=""
+            while ((reader.readLine().also { line = it })!=null) return line
+            Log.d("MyLog","")
+        }catch (e: FileNotFoundException){
+            e.printStackTrace()
+            Log.d("MyLog","File111NotFoundException")
+            countNotFound="0"
+        }catch (e: IOException){
+            e.printStackTrace()
+
+        }
+
+        return null.toString()
+    }
+
+    private fun saveData(fileName:String, count:String) {
+        try {
+            val writer: BufferedWriter= BufferedWriter(
+                OutputStreamWriter(openFileOutput(
+                    fileName,
+                    MODE_PRIVATE))
+
+            )
+            writer.write(count)
+            writer.close()
+        }catch (e: Exception){
+            Log.d("MyLog","$e")
+        }
+        catch (e: IOException){
+            Log.d("MyLog","$e")
+        }
+
+
+
     }
 
     private fun discountPriceData() {
@@ -56,7 +115,6 @@ class MainActivity : AppCompatActivity() {
 
                             var discountPrice = priceData[priceData.size-1] * discount / 100
                             resultData.add(discountPrice)
-                            Log.d("MyLog", " resultData    $resultData")
 
                         }
                         else->    Log.d("MyLog","no more")
@@ -65,10 +123,9 @@ class MainActivity : AppCompatActivity() {
                     binding.tvResult.text = resultData.toString()
                     edPrice.getText().clear()
                 }
-
-
             }
         }
     }
+
 
 }
