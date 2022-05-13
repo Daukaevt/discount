@@ -9,12 +9,12 @@ import android.widget.Toast
 import com.wixsite.mupbam1.resume.discount.databinding.ActivityMainBinding
 import java.io.*
 
-val fileName= "CountFile"
+
 val priceData= mutableListOf<Int>()
 val resultData= mutableListOf<Int>()
 var offset=0
 var readLength=0
-var countNotFound=""
+
 
 class MainActivity : AppCompatActivity() {
     lateinit var binding: ActivityMainBinding
@@ -23,75 +23,38 @@ class MainActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(binding.root)
 
-        var count=readData(fileName)
-        if (countNotFound=="0") count="0"
-        var countValue= count.toInt()
-        countValue++
-        count=countValue.toString()
-        if (countValue==3) {
-            Toast.makeText(this, "Toast с произвольным текстом.", Toast.LENGTH_LONG).show()
-            }
-
-        saveData(fileName, count)
-        binding.launch.text=count
-        init()
+           init()
     }
 
     fun init(){
         binding.apply {
             btRun.setOnClickListener {
                 if (edOffset.text.isNotEmpty()&&edReadLength.text.isNotEmpty()) {
-                    offset = edOffset.text.toString().toInt()
-                    readLength = edReadLength.text.toString().toInt()
-                    edPrice.visibility = View.VISIBLE
-                    tvArray.visibility = View.VISIBLE
-                    tvResult.visibility = View.VISIBLE
-                    btEnter.visibility = View.VISIBLE
-                    btRun.visibility=View.GONE
-                    edDiscount.visibility=View.GONE
-                    edOffset.visibility=View.GONE
-                    edReadLength.visibility=View.GONE
-
-                    discountPriceData()
-
+                  when(edDiscount.text.toString().toInt()){
+                      in 1..99-> visib()
+                      else -> Toast.makeText(this@MainActivity, "% скидки должен быть в диапазоне 1..99", Toast.LENGTH_SHORT).show()
+                  }
                 }
             }
         }
     }
 
-    private fun readData(fileName: String): String {
-        try {
-            val reader = BufferedReader(InputStreamReader(openFileInput(fileName)))
-            var line: String
-            while ((reader.readLine().also { line = it })!=null) return line
-
-        }catch (e: FileNotFoundException){
-            e.printStackTrace()
-            countNotFound="0"
-        }catch (e: IOException){
-            e.printStackTrace()
-
+    private fun visib() {
+        binding.apply {
+            offset = edOffset.text.toString().toInt()
+            readLength = edReadLength.text.toString().toInt()
+            edPrice.visibility = View.VISIBLE
+            tvArray.visibility = View.VISIBLE
+            tvResult.visibility = View.VISIBLE
+            btEnter.visibility = View.VISIBLE
+            btRun.visibility = View.GONE
+            edDiscount.visibility = View.GONE
+            edOffset.visibility = View.GONE
+            edReadLength.visibility = View.GONE
         }
 
-        return null.toString()
-    }
+        discountPriceData()
 
-    private fun saveData(fileName:String, count:String) {
-        try {
-            val writer= BufferedWriter(
-                OutputStreamWriter(openFileOutput(
-                    fileName,
-                    MODE_PRIVATE))
-
-            )
-            writer.write(count)
-            writer.close()
-        }catch (e: Exception){
-            Log.d("MyLog","$e")
-        }
-        catch (e: IOException){
-            Log.d("MyLog","$e")
-        }
     }
 
     private fun discountPriceData() {
